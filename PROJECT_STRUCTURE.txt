@@ -1,0 +1,339 @@
+JARVIS Assistant - Complete Project Structure
+==============================================
+
+jarvis-assistant/
+│
+├── 📄 Core Application Files
+│   ├── app.py                      # Main Streamlit web application
+│   ├── config.py                   # Configuration settings
+│   ├── ingestion.py                # Document ingestion & processing
+│   ├── llm_handler.py              # LLM integration (Ollama/OpenAI)
+│   ├── rag_assistant.py            # RAG logic & chat handler
+│   ├── utils.py                    # Utility functions & health checks
+│   └── example_usage.py            # CLI usage examples
+│
+├── 📚 Documentation
+│   ├── START_HERE.md               # ⭐ Quick start (read this first!)
+│   ├── INSTALLATION.md             # Detailed installation & testing
+│   ├── SETUP.md                    # Step-by-step setup guide
+│   ├── README.md                   # Complete project documentation
+│   ├── QUICK_REFERENCE.md          # Commands & tips cheat sheet
+│   ├── PROJECT_SUMMARY.md          # This overview document
+│   └── PROJECT_STRUCTURE.txt       # Project tree (this file)
+│
+├── ⚙️ Configuration Files
+│   ├── requirements.txt            # Python dependencies
+│   ├── .env.example                # Environment variables template
+│   ├── .env                        # Your config (create from .env.example)
+│   └── .gitignore                  # Git ignore rules
+│
+├── 📁 Data Directories
+│   ├── data/                       # Sample and test data
+│   │   └── sample_notes.txt        # Example document for testing
+│   │
+│   ├── uploaded_files/             # User-uploaded documents (created on first upload)
+│   │   └── (your uploaded files)
+│   │
+│   └── venv/                       # Python virtual environment (created during setup)
+│       └── (Python packages)
+│
+└── 🌐 Runtime Files (created when app runs)
+    └── .streamlit/                 # Streamlit configuration (optional)
+
+================================================================================
+FILE DESCRIPTIONS
+================================================================================
+
+CORE APPLICATION (7 files)
+--------------------------
+
+app.py (~ 180 lines)
+- Main entry point for JARVIS
+- Streamlit UI with chat interface
+- File upload and processing
+- Real-time chat with AI
+- System status monitoring
+- Session state management
+
+config.py (~ 30 lines)
+- Centralized configuration
+- Environment variable loading
+- Default settings (chunk size, top K, etc.)
+- Path definitions
+
+ingestion.py (~ 180 lines)
+- Document reading (PDF, DOCX, TXT)
+- Text chunking with overlap
+- Embedding generation
+- Pinecone vector storage
+- Batch processing support
+
+llm_handler.py (~ 60 lines)
+- Ollama integration (local LLaMA)
+- OpenAI fallback
+- Response generation
+- Model availability checking
+
+rag_assistant.py (~ 120 lines)
+- Query embedding
+- Vector similarity search
+- Context retrieval from Pinecone
+- Answer generation with LLM
+- Source attribution
+
+utils.py (~ 150 lines)
+- System health checks
+- Environment validation
+- Directory creation
+- Pinecone statistics
+- Diagnostic tools
+
+example_usage.py (~ 80 lines)
+- Batch document ingestion
+- Interactive CLI chat
+- Programmatic API examples
+
+DOCUMENTATION (7 files)
+-----------------------
+
+START_HERE.md
+- 15-minute quick start guide
+- Fastest way to get running
+- Essential setup only
+- First-time user checklist
+
+INSTALLATION.md
+- Comprehensive installation guide
+- Step-by-step with screenshots
+- Troubleshooting section
+- Testing procedures
+- Common issues & solutions
+
+SETUP.md
+- Quick setup reference
+- PowerShell commands
+- Configuration steps
+- Service setup (Pinecone, Ollama)
+
+README.md
+- Complete project documentation
+- Features overview
+- Architecture explanation
+- Usage guide
+- Advanced features
+- Contributing guidelines
+
+QUICK_REFERENCE.md
+- Commands cheat sheet
+- Architecture diagram (ASCII)
+- Configuration reference
+- Performance tips
+- Troubleshooting checklist
+
+PROJECT_SUMMARY.md
+- High-level project overview
+- Technology stack
+- Key features
+- Use cases
+- Learning outcomes
+
+PROJECT_STRUCTURE.txt
+- This file
+- Complete project tree
+- File descriptions
+
+CONFIGURATION (4 files)
+-----------------------
+
+requirements.txt
+- streamlit==1.28.0
+- langchain==0.1.0
+- pinecone-client==3.0.0
+- ollama==0.1.6
+- sentence-transformers==2.2.2
+- pypdf, python-docx
+- And more...
+
+.env.example
+- Template for environment variables
+- Shows required configuration
+- Copy to .env and fill in
+
+.env (YOU CREATE THIS)
+- Your actual configuration
+- API keys and credentials
+- Model settings
+- NEVER commit to git
+
+.gitignore
+- Excludes .env file
+- Ignores __pycache__
+- Excludes uploaded files
+- Prevents sensitive data commits
+
+DATA & DIRECTORIES
+------------------
+
+data/
+- Sample and test files
+- sample_notes.txt included
+- Add your own test files here
+
+uploaded_files/
+- Created automatically on first upload
+- Stores user-uploaded documents
+- Gitignored for privacy
+
+venv/
+- Python virtual environment
+- Contains all installed packages
+- Created during setup
+- Gitignored
+
+================================================================================
+WORKFLOW & DATA FLOW
+================================================================================
+
+SETUP WORKFLOW:
+1. Install Python dependencies → venv/ created
+2. Configure .env file → credentials set
+3. Install Ollama → LLaMA model ready
+4. Create Pinecone account → vector DB ready
+5. Run streamlit → app.py starts
+
+USAGE WORKFLOW:
+1. User uploads file → saved to uploaded_files/
+2. Click "Process" → ingestion.py processes
+3. Document chunked → embeddings created
+4. Vectors stored → Pinecone updated
+5. User asks question → rag_assistant.py handles
+6. Query embedded → searches Pinecone
+7. Context retrieved → sent to llm_handler.py
+8. LLM generates answer → displayed in UI
+
+================================================================================
+FILE DEPENDENCIES
+================================================================================
+
+app.py
+  ├── imports: config, ingestion, rag_assistant
+  ├── uses: streamlit, pathlib
+  └── reads: .env (via config)
+
+ingestion.py
+  ├── imports: config
+  ├── uses: langchain, pinecone, sentence-transformers
+  └── reads: documents from uploaded_files/
+
+rag_assistant.py
+  ├── imports: config, llm_handler
+  ├── uses: langchain, pinecone, embeddings
+  └── queries: Pinecone index
+
+llm_handler.py
+  ├── imports: config
+  ├── uses: ollama or openai
+  └── reads: .env (via config)
+
+utils.py
+  ├── imports: config
+  ├── uses: pinecone, dotenv, subprocess
+  └── validates: environment setup
+
+example_usage.py
+  ├── imports: ingestion, rag_assistant
+  └── demonstrates: CLI usage
+
+config.py
+  ├── imports: dotenv
+  └── reads: .env file
+
+================================================================================
+EXTERNAL SERVICES
+================================================================================
+
+Pinecone (Vector Database)
+  - Stores document embeddings
+  - Provides semantic search
+  - Cloud-hosted service
+  - Free tier available
+  - Configure in .env
+
+Ollama (Local LLM)
+  - Runs LLaMA locally
+  - No API costs
+  - Requires installation
+  - Models: llama2, phi, mistral, etc.
+  - Alternative to OpenAI
+
+OpenAI (Optional)
+  - Cloud-based LLM
+  - Faster responses
+  - API costs apply
+  - Configure in .env if used
+  - Fallback option
+
+HuggingFace (Embeddings)
+  - Sentence Transformers
+  - Local embedding model
+  - No API needed
+  - Downloads automatically
+  - Model: all-MiniLM-L6-v2
+
+================================================================================
+DEVELOPMENT FILES
+================================================================================
+
+Created during development:
+- __pycache__/ (Python bytecode)
+- .vscode/ (VS Code settings)
+- .idea/ (PyCharm settings)
+
+Created during runtime:
+- .streamlit/ (Streamlit config)
+- uploaded_files/ (user uploads)
+
+All development files are gitignored.
+
+================================================================================
+SIZE & STATISTICS
+================================================================================
+
+Total Files: 17 (excluding venv and generated files)
+Python Modules: 7
+Documentation: 7
+Configuration: 4
+
+Approximate Sizes:
+- Total Code: ~1,200 lines
+- Total Docs: ~2,500 lines
+- Requirements: 12 packages
+- Sample Data: 1 file
+
+Disk Space (estimated):
+- Code & Docs: < 1 MB
+- Dependencies (venv): ~500 MB
+- Ollama Model: ~4 GB (llama2)
+- User Data: Varies
+
+================================================================================
+GETTING STARTED
+================================================================================
+
+1. Read: START_HERE.md (15 min quick start)
+2. Install: Follow INSTALLATION.md
+3. Configure: Create .env from .env.example
+4. Test: Upload sample_notes.txt
+5. Use: Upload your own documents!
+
+For help:
+- Quick reference: QUICK_REFERENCE.md
+- Troubleshooting: INSTALLATION.md
+- Full docs: README.md
+- System check: python utils.py
+
+================================================================================
+
+Created: November 2025
+Version: 1.0
+Framework: RAG with LangChain + Streamlit + Pinecone + Ollama
