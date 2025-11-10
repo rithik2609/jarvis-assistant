@@ -38,7 +38,6 @@ data/
 uploaded_files/
 *.pdf
 *.docx
-*.txt
 
 # Logs
 *.log
